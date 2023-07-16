@@ -43,7 +43,6 @@ with PoseLandmarker.create_from_options(options) as landmarker:
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
         timestamp += delta
         pose_landmarker_result = landmarker.detect_for_video(mp_image, timestamp)
-        # print(pose_landmarker_result)
         rendered_img = draw.draw_landmarks_on_image(frame, pose_landmarker_result)
         out.write(rendered_img)
         cv2.imshow("pose-vid", rendered_img)
