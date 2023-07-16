@@ -21,7 +21,7 @@ def draw_hand_landmarks_on_image(rgb_image, detection_result):
 
         # Draw the hand landmarks.
         hand_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
-        print("hand landmarks")
+
         hand_landmarks_proto.landmark.extend(
             [
                 landmark_pb2.NormalizedLandmark(
@@ -31,7 +31,6 @@ def draw_hand_landmarks_on_image(rgb_image, detection_result):
             ]
         )
 
-        print(hand_landmarks_proto, type(hand_landmarks_proto))
         solutions.drawing_utils.draw_landmarks(
             annotated_image,
             hand_landmarks_proto,
