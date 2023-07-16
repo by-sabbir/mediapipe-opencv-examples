@@ -5,7 +5,6 @@ from pathlib import Path
 from datetime import datetime
 from helpers import draw
 
-import time
 BASE_PATH = Path.cwd()
 MODEL_PATH = BASE_PATH / "tasks"
 
@@ -18,7 +17,8 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 options = PoseLandmarkerOptions(
     base_options=BaseOptions(model_asset_path=pose_model_path),
-    running_mode=VisionRunningMode.VIDEO)
+    running_mode=VisionRunningMode.VIDEO,
+)
 
 cv2.namedWindow("pose-vid", cv2.WINDOW_NORMAL)
 cap = cv2.VideoCapture("./data/vid2.mp4")
@@ -26,9 +26,11 @@ if not cap.isOpened():
     print("could not play from provided file")
     sys.exit(124)
 fps = cap.get(cv2.CAP_PROP_FPS)
-out = cv2.VideoWriter("./data/out.mp4",cv2.VideoWriter_fourcc(*"MPEG"),fps,(432, 769))
+out = cv2.VideoWriter(
+    "./data/out.mp4", cv2.VideoWriter_fourcc(*"MPEG"), fps, (432, 769)
+)
 print("fps(s): ", fps)
-delta = int((1.0/fps) * 1000)
+delta = int((1.0 / fps) * 1000)
 timestamp = int(datetime.now().timestamp())
 with PoseLandmarker.create_from_options(options) as landmarker:
     while cap.isOpened():
@@ -45,7 +47,7 @@ with PoseLandmarker.create_from_options(options) as landmarker:
         rendered_img = draw.draw_landmarks_on_image(frame, pose_landmarker_result)
         out.write(rendered_img)
         cv2.imshow("pose-vid", rendered_img)
-        if cv2.waitKey(10) & 0xFF == ord('q'):
+        if cv2.waitKey(10) & 0xFF == ord("q"):
             break
 
     cap.release()

@@ -1,12 +1,10 @@
 import cv2
-import sys
 import mediapipe as mp
 
 from pathlib import Path
 
 from helpers import draw
 
-sys.path.append("helpers")
 
 cv2.namedWindow("pose", cv2.WINDOW_NORMAL)
 BASE_PATH = Path.cwd()
@@ -22,7 +20,6 @@ options = PoseLandmarkerOptions(
     base_options=BaseOptions(model_asset_path=pose_model_path),
     running_mode=VisionRunningMode.IMAGE,
 )
-
 
 
 orig = cv2.imread("data/yoga1.jpg", cv2.IMREAD_COLOR)
